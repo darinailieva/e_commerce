@@ -8,6 +8,7 @@ import com.brainstars.ecommerce.repository.ProductRepository;
 import com.brainstars.ecommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,8 +30,35 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAll(String name, Pageable pageable) {
-        return productRepository.findAllByOrderByName(name, pageable);
+    public List<Product> getAll(String orderBy, Sort.Direction direction, Pageable pageable) {
+        if (direction == Sort.Direction.DESC) {
+            switch (orderBy) {
+                case "name":
+                    return productRepository.findAllOrderByNameDESC(orderBy, pageable);
+                case "quantity":
+                    return productRepository.findAllOrderByQuantityDESC(orderBy, pageable);
+                case "createdDate":
+                    return productRepository.findAllOrderByCreatedDateDESC(orderBy, pageable);
+                case "lastModifiedDate":
+                    return productRepository.findAllOrderByLastModifiedDateDESC(orderBy, pageable);
+                default:
+                    return productRepository.getAllDESC();
+
+            }
+        } else {
+            switch (orderBy) {
+                case "name":
+                    return productRepository.findAllOrderByNameASC(orderBy, pageable);
+                case "quantity":
+                    return productRepository.findAllOrderByQuantityASC(orderBy, pageable);
+                case "createdDate":
+                    return productRepository.findAllOrderByCreatedDateASC(orderBy, pageable);
+                case "lastModifiedDate":
+                    return productRepository.findAllOrderByLastModifiedDateASC(orderBy, pageable);
+                default:
+                    return productRepository.getAllASC();
+            }
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.brainstars.ecommerce.services;
 
 import com.brainstars.ecommerce.models.Product;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 
 public interface ProductService {
-    List<Product> getAll(String name, Pageable pageable);
+    List<Product> getAll(String orderBy, Sort.Direction direction, Pageable pageable);
 
     int createProduct(Product product);
 
