@@ -32,11 +32,11 @@ public class ProductController {
     }
 
     @GetMapping
-    public ProductsResponse getProducts(@RequestParam String name,
+    public ProductsResponse getProducts(@RequestParam String orderBy,
                                         @RequestParam Sort.Direction direction,
                                         @RequestParam int page,
                                         @RequestParam int size) {
-        return convertToProductsResponse(productService.getAll(name, PageRequest.of(page, size, direction, "quantity")));
+        return convertToProductsResponse(productService.getAll(orderBy, direction, PageRequest.of(page, size)));
     }
 
     @PostMapping
