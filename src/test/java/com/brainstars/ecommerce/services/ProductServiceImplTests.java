@@ -32,17 +32,144 @@ public class ProductServiceImplTests {
     ProductServiceImpl mockService;
 
     @Test
-    public void getAll_should_Return_EmptyList() {
+    public void getAll_should_Return_EmptyList_With_Name_DESC() {
         //Arrange
-        String name = "Dell";
-        Pageable pageable = PageRequest.of(0, 1, Sort.Direction.DESC, "quantity");
-        Mockito.when(mockRepository.findAllByOrderByName(name, pageable))
+        String orderBy = "name";
+        Pageable pageable = PageRequest.of(0, 1);
+        Mockito.when(mockRepository.findAllOrderByNameDESC(orderBy, pageable))
                 .thenReturn(new ArrayList<>());
         //Act
-        mockService.getAll(name, pageable);
+        mockService.getAll(orderBy, Sort.Direction.DESC, pageable);
 
         //Assert
-        Assert.assertTrue(mockRepository.findAllByOrderByName(name, pageable).isEmpty());
+        Assert.assertTrue(mockRepository.findAllOrderByNameDESC(orderBy, pageable).isEmpty());
+    }
+
+    @Test
+    public void getAll_should_Return_EmptyList_With_Quantity_DESC() {
+        //Arrange
+        String orderBy = "quantity";
+        Pageable pageable = PageRequest.of(0, 1);
+        Mockito.when(mockRepository.findAllOrderByQuantityDESC(orderBy, pageable))
+                .thenReturn(new ArrayList<>());
+        //Act
+        mockService.getAll(orderBy, Sort.Direction.DESC, pageable);
+
+        //Assert
+        Assert.assertTrue(mockRepository.findAllOrderByQuantityDESC(orderBy, pageable).isEmpty());
+    }
+
+    @Test
+    public void getAll_should_Return_EmptyList_With_CreatedDate_DESC() {
+        //Arrange
+        String orderBy = "createdDate";
+        Pageable pageable = PageRequest.of(0, 1);
+        Mockito.when(mockRepository.findAllOrderByCreatedDateDESC(orderBy, pageable))
+                .thenReturn(new ArrayList<>());
+        //Act
+        mockService.getAll(orderBy, Sort.Direction.DESC, pageable);
+
+        //Assert
+        Assert.assertTrue(mockRepository.findAllOrderByCreatedDateDESC(orderBy, pageable).isEmpty());
+    }
+
+    @Test
+    public void getAll_should_Return_EmptyList_With_LastModifiedDate_DESC() {
+        //Arrange
+        String orderBy = "lastModifiedDate";
+        Pageable pageable = PageRequest.of(0, 1);
+        Mockito.when(mockRepository.findAllOrderByLastModifiedDateDESC(orderBy, pageable))
+                .thenReturn(new ArrayList<>());
+        //Act
+        mockService.getAll(orderBy, Sort.Direction.DESC, pageable);
+
+        //Assert
+        Assert.assertTrue(mockRepository.findAllOrderByLastModifiedDateDESC(orderBy, pageable).isEmpty());
+    }
+
+    @Test
+    public void getAll_should_Return_EmptyList_With_Id_DESC() {
+        //Arrange
+        String orderBy = "";
+        Pageable pageable = PageRequest.of(0, 1);
+        Mockito.when(mockRepository.getAllDESC())
+                .thenReturn(new ArrayList<>());
+        //Act
+        mockService.getAll(orderBy, Sort.Direction.DESC, pageable);
+
+        //Assert
+        Assert.assertTrue(mockRepository.getAllDESC().isEmpty());
+    }
+
+
+    @Test
+    public void getAll_should_Return_EmptyList_With_Name_ASC() {
+        //Arrange
+        String orderBy = "name";
+        Pageable pageable = PageRequest.of(0, 1);
+        Mockito.when(mockRepository.findAllOrderByNameASC(orderBy, pageable))
+                .thenReturn(new ArrayList<>());
+        //Act
+        mockService.getAll(orderBy, Sort.Direction.ASC, pageable);
+
+        //Assert
+        Assert.assertTrue(mockRepository.findAllOrderByNameASC(orderBy, pageable).isEmpty());
+    }
+
+    @Test
+    public void getAll_should_Return_EmptyList_With_Quantity_ASC() {
+        //Arrange
+        String orderBy = "quantity";
+        Pageable pageable = PageRequest.of(0, 1);
+        Mockito.when(mockRepository.findAllOrderByQuantityASC(orderBy, pageable))
+                .thenReturn(new ArrayList<>());
+        //Act
+        mockService.getAll(orderBy, Sort.Direction.ASC, pageable);
+
+        //Assert
+        Assert.assertTrue(mockRepository.findAllOrderByQuantityASC(orderBy, pageable).isEmpty());
+    }
+
+    @Test
+    public void getAll_should_Return_EmptyList_With_CreatedDate_ASC() {
+        //Arrange
+        String orderBy = "createdDate";
+        Pageable pageable = PageRequest.of(0, 1);
+        Mockito.when(mockRepository.findAllOrderByCreatedDateASC(orderBy, pageable))
+                .thenReturn(new ArrayList<>());
+        //Act
+        mockService.getAll(orderBy, Sort.Direction.ASC, pageable);
+
+        //Assert
+        Assert.assertTrue(mockRepository.findAllOrderByCreatedDateASC(orderBy, pageable).isEmpty());
+    }
+
+    @Test
+    public void getAll_should_Return_EmptyList_With_LastModifiedDate_ASC() {
+        //Arrange
+        String orderBy = "lastModifiedDate";
+        Pageable pageable = PageRequest.of(0, 1);
+        Mockito.when(mockRepository.findAllOrderByLastModifiedDateASC(orderBy, pageable))
+                .thenReturn(new ArrayList<>());
+        //Act
+        mockService.getAll(orderBy, Sort.Direction.ASC, pageable);
+
+        //Assert
+        Assert.assertTrue(mockRepository.findAllOrderByLastModifiedDateASC(orderBy, pageable).isEmpty());
+    }
+
+    @Test
+    public void getAll_should_Return_EmptyList_With_Id_ASC() {
+        //Arrange
+        String orderBy = "";
+        Pageable pageable = PageRequest.of(0, 1);
+        Mockito.when(mockRepository.getAllASC())
+                .thenReturn(new ArrayList<>());
+        //Act
+        mockService.getAll(orderBy, Sort.Direction.ASC, pageable);
+
+        //Assert
+        Assert.assertTrue(mockRepository.getAllASC().isEmpty());
     }
 
     @Test
