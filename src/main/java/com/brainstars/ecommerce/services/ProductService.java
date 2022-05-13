@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Interface for products.
@@ -15,7 +16,7 @@ public interface ProductService {
 
     int createProduct(Product product);
 
-    Product getById(int id);
+    Optional<Product> getById(int id);
 
     void updateProduct(Product product);
 

@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
+
 import static com.brainstars.ecommerce.mappers.ProductMapper.*;
 
 /**
@@ -41,34 +43,40 @@ public class ProductController {
 
     @PostMapping
     public ProductResponse createProduct(@RequestBody ProductCreateRequest request) {
-        try {
-            var product = convertToProductFromCreateRequest(request);
-            return new ProductResponse(productService.createProduct(product));
-        } catch (InvalidParameterException e) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
-        }
+        validateProductCreateRequest(request);
+        var product = convertToProductFromCreateRequest(request);
+        return new ProductResponse(productService.createProduct(product));
+
     }
 
     @PutMapping("/{id}")
     public ProductResponse updateProduct(@PathVariable int id, @RequestBody ProductUpdateRequest request) {
-        try {
-            var product = productService.getById(id);
-            product = convertToProductFromUpdateRequest(request, product);
-            productService.updateProduct(product);
-            return new ProductResponse(id);
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
+        var product = productService.getById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product", id));
+
+        product = convertToProductFromUpdateRequest(request, product);
+        productService.updateProduct(product);
+        return new ProductResponse(id);
     }
 
     @DeleteMapping("/{id}")
     public ProductResponse deleteProduct(@PathVariable int id) {
-        try {
-            var product = productService.getById(id);
-            productService.deleteProduct(product);
-            return new ProductResponse(id);
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        var product = productService.getById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product", id));
+
+        productService.deleteProduct(product);
+        return new ProductResponse(id);
+    }
+
+    private void validateProductCreateRequest(ProductCreateRequest request) {
+        if (Objects.isNull(request.getName())) {
+            throw new InvalidParameterException("Name");
+        }
+        if (Objects.isNull(request.getCategory())) {
+            throw new InvalidParameterException("Category");
+        }
+        if (request.getQuantity() < 0) {
+            throw new InvalidParameterException("Quantity");
         }
     }
 }
