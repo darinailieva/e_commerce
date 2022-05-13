@@ -1,6 +1,5 @@
 package com.brainstars.ecommerce.services.impls;
 
-import com.brainstars.ecommerce.exceptions.InvalidParameterException;
 import com.brainstars.ecommerce.models.Product;
 import com.brainstars.ecommerce.repository.ProductRepository;
 import com.brainstars.ecommerce.services.ProductService;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**

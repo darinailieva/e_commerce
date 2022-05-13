@@ -5,7 +5,6 @@ import com.brainstars.ecommerce.models.dtos.CategoryResponse;
 import com.brainstars.ecommerce.models.dtos.ProductCreateRequest;
 import com.brainstars.ecommerce.models.dtos.ProductUpdateRequest;
 import com.brainstars.ecommerce.models.dtos.ProductsResponse;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.List;
