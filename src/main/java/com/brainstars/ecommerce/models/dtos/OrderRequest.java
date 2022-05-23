@@ -6,7 +6,6 @@ import lombok.Setter;
 /**
  * DTO for orders.
  */
-
 @Getter
 @Setter
 public class OrderRequest {
