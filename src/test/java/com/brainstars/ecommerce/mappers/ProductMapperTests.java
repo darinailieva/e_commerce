@@ -23,7 +23,6 @@ public class ProductMapperTests {
         //Assert
         Assert.assertNotNull(request);
         Assert.assertEquals(request.getName(), product.getName());
-        Assert.assertEquals(request.getCategory(), product.getCategory());
         Assert.assertEquals(request.getDescription(), product.getDescription());
         Assert.assertEquals(request.getQuantity(), product.getQuantity());
     }
@@ -40,25 +39,7 @@ public class ProductMapperTests {
         //Assert
         Assert.assertNotNull(request);
         Assert.assertEquals(request.getName(), product.getName());
-        Assert.assertEquals(request.getCategory(), product.getCategory());
         Assert.assertEquals(request.getDescription(), product.getDescription());
     }
-
-    @Test
-    public void convertToCategoryResponse() {
-        //Arrange
-        List<Object[]> objects = createObjects();
-
-        //Act
-        List<CategoryResponse> categoryResponses = ProductMapper.convertToCategoryResponse(objects);
-
-        //Assert
-        Assert.assertEquals(objects.get(0)[0], categoryResponses.get(0).getCategory());
-        Assert.assertEquals(objects.get(0)[1], categoryResponses.get(0).getProductsAvailable());
-        Assert.assertEquals(objects.get(1)[0], categoryResponses.get(1).getCategory());
-        Assert.assertEquals(objects.get(1)[1], categoryResponses.get(1).getProductsAvailable());
-
-    }
-
 
 }
