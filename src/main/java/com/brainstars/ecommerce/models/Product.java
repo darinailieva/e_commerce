@@ -1,6 +1,7 @@
 package com.brainstars.ecommerce.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,12 +16,13 @@ import java.util.Date;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "e_commerce")
+@Table(name = "products")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +31,6 @@ public class Product {
 
     @Column(name = "name")
     String name;
-
-    @Column(name = "category")
-    String category;
 
     @Column(name = "description")
     String description;
@@ -49,4 +48,8 @@ public class Product {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date lastModifiedDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    @JsonIgnore
+    Category category;
 }

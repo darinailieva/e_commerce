@@ -1,11 +1,11 @@
 package com.brainstars.ecommerce.services.impls;
 
 import com.brainstars.ecommerce.models.Product;
+import com.brainstars.ecommerce.models.dtos.CategoryResponse;
 import com.brainstars.ecommerce.repository.ProductRepository;
 import com.brainstars.ecommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,33 +27,33 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAll(String orderBy, Sort.Direction direction, Pageable pageable) {
-        if (direction == Sort.Direction.DESC) {
-            switch (orderBy) {
+    public List<Product> getAll(PageRequest pageRequest) {
+        String[] requests = pageRequest.getSort().toString().split(": ");
+        if (requests[1].equals("DESC")) {
+            switch (requests[0]) {
                 case "name":
-                    return productRepository.findAllOrderByNameDESC(orderBy, pageable);
+                    return productRepository.getAllByOrderByNameDesc(pageRequest);
                 case "quantity":
-                    return productRepository.findAllOrderByQuantityDESC(orderBy, pageable);
+                    return productRepository.getAllByQuantityDesc(pageRequest);
                 case "createdDate":
-                    return productRepository.findAllOrderByCreatedDateDESC(orderBy, pageable);
+                    return productRepository.getAllByCreatedDateDesc(pageRequest);
                 case "lastModifiedDate":
-                    return productRepository.findAllOrderByLastModifiedDateDESC(orderBy, pageable);
+                    return productRepository.getAllByLastModifiedDateDesc(pageRequest);
                 default:
-                    return productRepository.getAllDESC();
-
+                    return  productRepository.getAllByIdDesc(pageRequest);
             }
         } else {
-            switch (orderBy) {
+            switch (requests[0]) {
                 case "name":
-                    return productRepository.findAllOrderByNameASC(orderBy, pageable);
+                    return productRepository.getAllByOrderByNameAsc(pageRequest);
                 case "quantity":
-                    return productRepository.findAllOrderByQuantityASC(orderBy, pageable);
+                    return productRepository.getAllByQuantityAsc(pageRequest);
                 case "createdDate":
-                    return productRepository.findAllOrderByCreatedDateASC(orderBy, pageable);
+                    return productRepository.getAllByCreatedDateAsc(pageRequest);
                 case "lastModifiedDate":
-                    return productRepository.findAllOrderByLastModifiedDateASC(orderBy, pageable);
+                    return  productRepository.getAllByLastModifiedDateAsc(pageRequest);
                 default:
-                    return productRepository.getAllASC();
+                    return productRepository.getAllByIdAsc(pageRequest);
             }
         }
     }
@@ -63,9 +63,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id);
     }
 
+
     @Override
-    public List<Object[]> getAllByCategories() {
-        return productRepository.findAllByCategories();
+    public List<CategoryResponse> getCategories() {
+        return null;
     }
 
     @Override

@@ -36,7 +36,7 @@ public class ProductController {
                                         @RequestParam Sort.Direction direction,
                                         @RequestParam int page,
                                         @RequestParam int size) {
-        return convertToProductsResponse(productService.getAll(orderBy, direction, PageRequest.of(page, size)));
+        return convertToProductsResponse(productService.getAll(PageRequest.of(page, size, direction, orderBy)));
     }
 
     @PostMapping
@@ -44,7 +44,6 @@ public class ProductController {
         validateProductCreateRequest(request);
         var product = convertToProductFromCreateRequest(request);
         return new ProductResponse(productService.createProduct(product));
-
     }
 
     @PutMapping("/{id}")
@@ -69,9 +68,6 @@ public class ProductController {
     private void validateProductCreateRequest(ProductCreateRequest request) {
         if (Objects.isNull(request.getName())) {
             throw new InvalidParameterException("Name");
-        }
-        if (Objects.isNull(request.getCategory())) {
-            throw new InvalidParameterException("Category");
         }
         if (request.getQuantity() < 0) {
             throw new InvalidParameterException("Quantity");

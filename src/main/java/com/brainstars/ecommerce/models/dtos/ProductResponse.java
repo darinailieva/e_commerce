@@ -5,9 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * DTO for a product.
+ * DTO for a product response.
  */
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
